@@ -79,11 +79,11 @@
     android:id="@+id/sun"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="30dp"
+    android:layout_marginStart="25dp"
     android:layout_marginTop="10dp"
     android:text="Sun"
     android:textColor="@color/colorPrimary"
-    android:textSize="20sp"
+    android:textSize="17sp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -103,7 +103,7 @@
         android:layout_marginTop="10dp"
         android:text="Mon"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/sun"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -123,7 +123,7 @@
         android:layout_marginTop="10dp"
         android:text="Tue"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/mon"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -143,7 +143,7 @@
         android:layout_marginTop="10dp"
         android:text="Wed"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/tue"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -163,7 +163,7 @@
         android:layout_marginTop="10dp"
         android:text="Thu"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/wed"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -183,7 +183,7 @@
         android:layout_marginTop="10dp"
         android:text="Fri"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/thu"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 
@@ -203,7 +203,7 @@
         android:layout_marginTop="10dp"
         android:text="Sat"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/fri"
         app:layout_constraintTop_toBottomOf="@+id/labelEditText" />
 

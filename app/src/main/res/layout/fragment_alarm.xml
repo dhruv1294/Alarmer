@@ -17,8 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:drawableTop="@drawable/ic_access_alarm_black_24dp"
             android:text="Time"
-            android:textSize="30sp"
+            android:textSize="40sp"
+            android:textColor="@color/colorPrimary"
+            android:drawableTint="@color/colorPrimary"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
