@@ -41,13 +41,13 @@ import java.util.Calendar;
 public class AlarmFragment extends Fragment  {
 
 
-   private static TextView timeTextView;
-    FloatingActionButton floater;
-    int hour=0 , min=0;
+   public static TextView timeTextView,alarm2,alarm3;
+
+
     private static Calendar calendar;
-    SharedPreferences sharedPreferences;
-    public static Button cancelButton;
-    AddAlarmActivity addAlarmActivity;
+    SharedPreferences sharedPreferences,pref2,pref3;
+    public static Button cancelButton,cancelButton2,cancelButton3;
+
 
 
     public AlarmFragment() {
@@ -60,27 +60,71 @@ public class AlarmFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_alarm, container, false);
-        floater = v.findViewById(R.id.floatingActionButton);
+
         timeTextView = v.findViewById(R.id.alarmTime1);
+        alarm2 = v.findViewById(R.id.alarmTime2);
+        alarm3 = v.findViewById(R.id.alarmTime3);
+        cancelButton3 = v.findViewById(R.id.cancelButton3);
+        cancelButton2 = v.findViewById(R.id.cancelButton2);
         cancelButton = v.findViewById(R.id.cancelButton);
 
         sharedPreferences = getActivity().getSharedPreferences("Alarm",Context.MODE_PRIVATE);
+        pref2 = getActivity().getSharedPreferences("Alarm2",Context.MODE_PRIVATE);
+        pref3 = getActivity().getSharedPreferences("Alarm3",Context.MODE_PRIVATE);
         if(sharedPreferences.getInt("status",99)==1){
             cancelButton.setVisibility(View.VISIBLE);
         }
+        if(pref2.getInt("status2",99)==1){
+            cancelButton2.setVisibility(View.VISIBLE);
+        }
+        if(pref3.getInt("status3",99)==1){
+            cancelButton3.setVisibility(View.VISIBLE);
+        }
+
         calendar = Calendar.getInstance();
         if(sharedPreferences.getInt("hour1",0) == 0 && sharedPreferences.getInt("min1",0) == 0){
-            timeTextView.setText("Add Alarm");
+            timeTextView.setText("Add Alarm1");
         }else {
             calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, sharedPreferences.getInt("hour1", 0), sharedPreferences.getInt("min1", 0));
             if (calendar != null)
                 timeTextView.setText(DateFormat.format("hh:mm aa", calendar));
         }
-        floater.setOnClickListener(new View.OnClickListener() {
+        if(pref2.getInt("hour2",0) == 0 && sharedPreferences.getInt("min2",0) == 0){
+            alarm2.setText("Add Alarm2");
+        }else {
+            calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, pref2.getInt("hour2", 0), pref2.getInt("min2", 0));
+            if (calendar != null)
+                alarm2.setText(DateFormat.format("hh:mm aa", calendar));
+        }
+        if(pref3.getInt("hour3",0) == 0 && sharedPreferences.getInt("min3",0) == 0){
+            alarm3.setText("Add Alarm3");
+        }else {
+            calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, pref3.getInt("hour3", 0), pref3.getInt("min3", 0));
+            if (calendar != null)
+                alarm3.setText(DateFormat.format("hh:mm aa", calendar));
+        }
+        timeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), AddAlarmActivity.class);
+                intent.putExtra("alarmNo",1);
+                startActivity(intent);
+            }
+        });
+        alarm2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddAlarmActivity.class);
+                intent.putExtra("alarmNo",2);
+                startActivity(intent);
+            }
+        });
+        alarm3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddAlarmActivity.class);
+                intent.putExtra("alarmNo",3);
                 startActivity(intent);
             }
         });
@@ -95,25 +139,54 @@ public class AlarmFragment extends Fragment  {
                     alarmManager.cancel(pendingIntent);
                 }
                 cancelButton.setVisibility(View.INVISIBLE);
-                timeTextView.setText("Add Alarm");
+                timeTextView.setText("Add Alarm1");
                 sharedPreferences.edit().putInt("hour1",0).apply();
                 sharedPreferences.edit().putInt("min1",0).apply();
                 sharedPreferences.edit().putInt("status",0).apply();
             }
         });
+        cancelButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=8;i<=14;i++){
+                    AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(getActivity(),AlertReciever.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),i,intent,0);
+                    assert alarmManager != null;
+                    alarmManager.cancel(pendingIntent);
+                }
+                cancelButton2.setVisibility(View.INVISIBLE);
+                alarm2.setText("Add Alarm2");
+                pref2.edit().putInt("hour2",0).apply();
+                pref2.edit().putInt("min2",0).apply();
+                pref2.edit().putInt("status2",0).apply();
+            }
+        });
+        cancelButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=15;i<=21;i++){
+                    AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(getActivity(),AlertReciever.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),i,intent,0);
+                    assert alarmManager != null;
+                    alarmManager.cancel(pendingIntent);
+                }
+                cancelButton3.setVisibility(View.INVISIBLE);
+                alarm3.setText("Add Alarm3");
+                pref3.edit().putInt("hour3",0).apply();
+                pref3.edit().putInt("min3",0).apply();
+                pref3.edit().putInt("status3",0).apply();
+            }
+        });
+
+
 
 
 
         return v;
     }
-    public void setTimeTextView(int hour,int min){
 
-        calendar.set(Calendar.YEAR,Calendar.MONTH,Calendar.DAY_OF_MONTH,hour,min);
-        Log.i("Time",Integer.toString(hour)+":"+Integer.toString(min));
-        timeTextView.setText(DateFormat.format("hh:mm aa",calendar));
-
-
-    }
 
 
 

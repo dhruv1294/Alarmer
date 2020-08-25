@@ -13,27 +13,28 @@
 
 
         <TextView
-            android:id="@+id/alarmTime1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+        android:id="@+id/alarmTime1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
 
-            android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
+            android:clickable="true"
 
-            android:drawableTint="@color/colorPrimary"
 
-            android:text="Time"
 
-            android:textColor="@color/colorPrimary"
-            android:textSize="40sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:text="Time"
+
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="95dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/button_border"
             android:shadowColor="@color/colorPrimary"
@@ -42,6 +43,68 @@
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/alarmTime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+
+            android:layout_marginTop="30dp"
+
+
+            android:text="Time"
+
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarmTime1" />
+
+        <Button
+            android:id="@+id/cancelButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/button_border"
+            android:shadowColor="@color/colorPrimary"
+            android:visibility="invisible"
+            android:text="cancel"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cancelButton" />
+
+        <TextView
+            android:id="@+id/alarmTime3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+
+
+            android:layout_marginTop="30dp"
+
+
+
+            android:text="Time"
+
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarmTime2" />
+
+        <Button
+            android:id="@+id/cancelButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/button_border"
+            android:shadowColor="@color/colorPrimary"
+            android:visibility="invisible"
+            android:text="cancel"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cancelButton2" />
 
 
 
@@ -55,6 +118,7 @@
             android:layout_marginBottom="30dp"
             android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
+            android:visibility="invisible"
             android:focusable="true"
             android:src="@drawable/ic_add_alarm_black_24dp"
             app:backgroundTint="@color/colorPrimary"

@@ -46,6 +46,8 @@ public class StopMathsAlarmActivity extends AppCompatActivity {
                         stopService(intent1);
                         finish();
                         System.exit(0);
+                    }else{
+                        Toast.makeText(StopMathsAlarmActivity.this, "Wrong Answer", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

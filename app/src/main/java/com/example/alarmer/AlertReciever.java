@@ -17,6 +17,8 @@ public class AlertReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int ringtone  = intent.getIntExtra("ringtone",0);
         int intentwhich = intent.getIntExtra("intentwhich",0);
+        String label = intent.getStringExtra("alarmlabel");
+        Log.i("label",label);
         switch (ringtone){
             case 0:
                 mediaPlayer= MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
@@ -51,8 +53,9 @@ public class AlertReciever extends BroadcastReceiver {
         //Toast.makeText(context, "Recieved", Toast.LENGTH_SHORT).show();
         Log.i("currenttime",Long.toString(System.currentTimeMillis()));
 
-        String label = intent.getStringExtra("label");
+
         if(intentwhich==0) {
+
             NotificationHelper notificationHelper = new NotificationHelper(context);
             NotificationCompat.Builder nb = notificationHelper.getChannelNotifiaction("Alarmer", label);
             notificationHelper.getManager().notify(1, nb.build());

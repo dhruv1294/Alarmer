@@ -42,6 +42,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
     AlarmFragment alarmFragment = new AlarmFragment();
     EditText labelEditText;
     MediaPlayer mediaPlayer;
+    int[] requestCodes;
     String label;
     Spinner spin;
     CheckBox sun,mon,tue,wed,thu,fri,sat;
@@ -49,15 +50,25 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
     int playing =0;
     Switch aSwitch;
     int intentwhich=0;
+    int alarmNo;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences,pref2,pref3;
+    SharedPreferences.Editor editor,editor2,editor3;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
+        alarmNo = getIntent().getIntExtra("alarmNo",0);
+        if(alarmNo == 1){
+            requestCodes = new int[]{1, 2, 3, 4, 5, 6, 7};
+        }else if(alarmNo ==2 ){
+            requestCodes = new int[]{8, 9, 10, 11, 12, 13, 14};
+        }else{
+            requestCodes = new int[]{15, 16, 17, 18, 19, 20, 21};
+        }
+
         setAlarmButton = findViewById(R.id.setAlarmButton);
         textClock= findViewById(R.id.textClock);
         aSwitch = findViewById(R.id.questionSwitch);
@@ -66,6 +77,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
         checkBox();
 
         sharedPreferences = this.getSharedPreferences("Alarm",Context.MODE_PRIVATE);
+        pref2 = this.getSharedPreferences("Alarm2",MODE_PRIVATE);
+        pref3 = this.getSharedPreferences("Alarm3",MODE_PRIVATE);
         spin = findViewById(R.id.spinner);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item,ringtones);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -168,6 +181,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 }
             }
         });
+        label = labelEditText.getText().toString();
 
 
 
@@ -200,41 +214,60 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        label = labelEditText.getText().toString();
-        editor = sharedPreferences.edit();
-        editor.clear();
-        editor.putInt("hour1",hourOfDay);
-        editor.putInt("min1",minute);
-        editor.putString("label",label);
-        editor.putInt("ringtone",ringtone);
-
-
-
-        Log.i("hour and min",Integer.toString(hourOfDay)+" " + Integer.toString(minute));
         Calendar c = Calendar.getInstance();
 
         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
         c.set(Calendar.MINUTE,minute);
         c.set(Calendar.SECOND,0);
         textClock.setText(DateFormat.format("hh:mm aa",c));
-        alarmFragment.setTimeTextView(hourOfDay,minute);
-
-
         checkAlarm(hourOfDay,minute);
-        editor.putInt("status",1);
 
-        editor.apply();
+        if(alarmNo==1) {
+            editor = sharedPreferences.edit();
+            editor.clear();
+            editor.putInt("hour1", hourOfDay);
+            editor.putInt("min1", minute);
+            editor.putString("label", label);
+            editor.putInt("ringtone", ringtone);
+            editor.putInt("status", 1);
+            editor.apply();
+            AlarmFragment.timeTextView.setText(DateFormat.format("hh:mm aa",c));
+            AlarmFragment.cancelButton.setVisibility(View.VISIBLE);
+        }else if (alarmNo==2){
+            editor2 = pref2.edit();
+            editor2.clear();
+            editor2.putInt("hour2", hourOfDay);
+            editor2.putInt("min2", minute);
+            editor2.putString("label2", label);
+            editor2.putInt("ringtone", ringtone);
+            editor2.putInt("status2", 1);
+            editor2.apply();
+            AlarmFragment.alarm2.setText(DateFormat.format("hh:mm aa",c));
+            AlarmFragment.cancelButton2.setVisibility(View.VISIBLE);
+        }else if(alarmNo==3){
+            editor3 = pref3.edit();
+            editor3.clear();
+            editor3.putInt("hour3", hourOfDay);
+            editor3.putInt("min3", minute);
+            editor3.putString("label3", label);
+            editor3.putInt("ringtone", ringtone);
+            editor3.putInt("status3", 1);
+            editor3.apply();
+            AlarmFragment.alarm3.setText(DateFormat.format("hh:mm aa",c));
+            AlarmFragment.cancelButton3.setVisibility(View.VISIBLE);
+        }
         Toast.makeText(this, "Scheduled Successfully", Toast.LENGTH_SHORT).show();
-
-        AlarmFragment.cancelButton.setVisibility(View.VISIBLE);
         onBackPressed();
     }
+
+
 
     public void setAlarm(Calendar c,int requestcode){
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this,AlertReciever.class);
-        intent.putExtra("label",label);
+        intent.putExtra("alarmlabel",label);
+        Log.i("label",label);
         intent.putExtra("ringtone",ringtone);
         intent.putExtra("intentwhich",intentwhich);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,requestcode,intent,0);
@@ -243,15 +276,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
 
     }
 
-    public  void cancelAlarm(int requestcode){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this,AlertReciever.class);
-        intent.putExtra("label",label);
-        intent.putExtra("ringtone",ringtone);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,requestcode,intent,0);
-        assert alarmManager != null;
-        alarmManager.cancel(pendingIntent);
-    }
+
     public void checkAlarm(int hourOfDay,int minute){
         if(sun.isChecked()){
 
@@ -266,7 +291,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,1);
+            setAlarm(c,requestCodes[0]);
         }
         if(mon.isChecked()){
 
@@ -281,7 +306,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,2);
+            setAlarm(c,requestCodes[1]);
         }
         if(tue.isChecked()){
 
@@ -296,7 +321,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,3);
+            setAlarm(c,requestCodes[2]);
         }
         if(wed.isChecked()){
 
@@ -312,7 +337,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
 
             }
 
-            setAlarm(c,4);
+            setAlarm(c,requestCodes[3]);
         }
         if(thu.isChecked()){
 
@@ -327,7 +352,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,5);
+            setAlarm(c,requestCodes[4]);
         }
         if(fri.isChecked()){
 
@@ -342,7 +367,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,6);
+            setAlarm(c,requestCodes[5]);
         }
         if(sat.isChecked()){
 
@@ -357,7 +382,7 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 Log.i("time",c.getTime().toString());
             }
 
-            setAlarm(c,7);
+            setAlarm(c,requestCodes[6]);
         }
 
     }
