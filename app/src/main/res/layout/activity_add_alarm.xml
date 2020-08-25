@@ -10,7 +10,7 @@
         android:id="@+id/textClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="Time"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -22,15 +22,18 @@
 
     <EditText
         android:id="@+id/labelEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="20dp"
-        android:text="default Label"
-        android:hint="Label"
-        android:background="@drawable/rounded_corner"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+
+        android:hint="Enter alarm Label"
+
+
         android:padding="10dp"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textClock" />
@@ -40,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:popupBackground="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="162dp"
         android:text="Test ringtone"
         android:textColor="@android:color/white"
@@ -65,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="162dp"
         android:text="Schedule Alarm"
         android:textColor="@android:color/white"
@@ -73,7 +76,7 @@
         android:background="@drawable/button_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testRingtone" />
+        app:layout_constraintTop_toBottomOf="@+id/questionInfo" />
 
     <TextView
     android:id="@+id/sun"
@@ -215,5 +218,34 @@
         android:layout_marginStart="0dp"
         app:layout_constraintStart_toStartOf ="@id/sat"
         app:layout_constraintTop_toBottomOf="@+id/sun" />
+
+    <TextView
+        android:id="@+id/bonusQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Do you want Questions??"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testRingtone" />
+    <Switch
+        android:id="@+id/questionSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testRingtone"/>
+    <TextView
+        android:id="@+id/questionInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Some basic math problems must be solved for the alarm to go off."
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bonusQuestion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,8 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextClock;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,7 +31,9 @@ import android.widget.Toast;
 import com.example.alarmer.Fragments.AlarmFragment;
 import com.example.alarmer.Fragments.TimePickerFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 
 public class AddAlarmActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     String[] ringtones = {"Default Ringtone","Extreme Alarm","Let me love U","LoveStory","Moonlight Sonata","See You Again","Swing Jazz","Tomorrowland"};
@@ -43,6 +47,9 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
     CheckBox sun,mon,tue,wed,thu,fri,sat;
     int ringtone;
     int playing =0;
+    Switch aSwitch;
+    int intentwhich=0;
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -53,12 +60,11 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
         setContentView(R.layout.activity_add_alarm);
         setAlarmButton = findViewById(R.id.setAlarmButton);
         textClock= findViewById(R.id.textClock);
+        aSwitch = findViewById(R.id.questionSwitch);
         labelEditText = findViewById(R.id.labelEditText);
         testRingtoneButton=findViewById(R.id.testRingtone);
         checkBox();
-        if(sun.isChecked()){
 
-        }
         sharedPreferences = this.getSharedPreferences("Alarm",Context.MODE_PRIVATE);
         spin = findViewById(R.id.spinner);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item,ringtones);
@@ -152,6 +158,16 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
                 }
             }
         });
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    intentwhich=1;
+                }else{
+                    intentwhich=0;
+                }
+            }
+        });
 
 
 
@@ -184,34 +200,62 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+        label = labelEditText.getText().toString();
         editor = sharedPreferences.edit();
         editor.clear();
         editor.putInt("hour1",hourOfDay);
         editor.putInt("min1",minute);
-        editor.apply();
+        editor.putString("label",label);
+        editor.putInt("ringtone",ringtone);
+
+
 
         Log.i("hour and min",Integer.toString(hourOfDay)+" " + Integer.toString(minute));
+        Calendar c = Calendar.getInstance();
 
+        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        c.set(Calendar.MINUTE,minute);
+        c.set(Calendar.SECOND,0);
+        textClock.setText(DateFormat.format("hh:mm aa",c));
         alarmFragment.setTimeTextView(hourOfDay,minute);
-        label = labelEditText.getText().toString();
+
+
         checkAlarm(hourOfDay,minute);
+        editor.putInt("status",1);
+
+        editor.apply();
         Toast.makeText(this, "Scheduled Successfully", Toast.LENGTH_SHORT).show();
+
+        AlarmFragment.cancelButton.setVisibility(View.VISIBLE);
         onBackPressed();
     }
 
-    private void setAlarm(Calendar c,int requestcode){
-        textClock.setText(DateFormat.format("hh:mm aa",c));
+    public void setAlarm(Calendar c,int requestcode){
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this,AlertReciever.class);
+        intent.putExtra("label",label);
+        intent.putExtra("ringtone",ringtone);
+        intent.putExtra("intentwhich",intentwhich);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,requestcode,intent,0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pendingIntent);
+
+
+    }
+
+    public  void cancelAlarm(int requestcode){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this,AlertReciever.class);
         intent.putExtra("label",label);
         intent.putExtra("ringtone",ringtone);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,requestcode,intent,0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pendingIntent);
-
+        assert alarmManager != null;
+        alarmManager.cancel(pendingIntent);
     }
-    private void checkAlarm(int hourOfDay,int minute){
+    public void checkAlarm(int hourOfDay,int minute){
         if(sun.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -225,6 +269,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,1);
         }
         if(mon.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -238,6 +284,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,2);
         }
         if(tue.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -251,6 +299,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,3);
         }
         if(wed.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -265,6 +315,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,4);
         }
         if(thu.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -278,6 +330,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,5);
         }
         if(fri.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -291,6 +345,8 @@ public class AddAlarmActivity extends AppCompatActivity implements TimePickerDia
             setAlarm(c,6);
         }
         if(sat.isChecked()){
+
+
             Calendar c = Calendar.getInstance();
             c.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);
             c.set(Calendar.HOUR_OF_DAY,hourOfDay);

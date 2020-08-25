@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.alarmer">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -9,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher2_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StopAlarmActivity"></activity>
+        <activity android:name=".StopMathsAlarmActivity"></activity>
+        <activity android:name=".StopAlarmActivity" />
         <activity
             android:name=".AddAlarmActivity"
             android:parentActivityName=".MainActivity" />
@@ -24,6 +26,15 @@
         </activity>
 
         <receiver android:name=".AlertReciever" />
+        <service
+            android:name=".AlarmService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+        </service>
     </application>
 
 </manifest>

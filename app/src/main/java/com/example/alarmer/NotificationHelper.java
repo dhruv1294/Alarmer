@@ -45,8 +45,12 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotifiaction(String title,String message){
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-        Intent intent = new Intent(this,StopAlarmActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        Intent intent;
+        PendingIntent pendingIntent;
+
+         intent=new Intent(this, StopAlarmActivity.class);
+             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
         return new NotificationCompat.Builder(getApplicationContext(),channelId)
                 .setContentTitle(title)
               //  .setSound(sound)

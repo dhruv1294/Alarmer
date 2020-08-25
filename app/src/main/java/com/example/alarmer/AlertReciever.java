@@ -9,12 +9,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 public class AlertReciever extends BroadcastReceiver {
     public static MediaPlayer mediaPlayer;
     @Override
     public void onReceive(Context context, Intent intent) {
         int ringtone  = intent.getIntExtra("ringtone",0);
+        int intentwhich = intent.getIntExtra("intentwhich",0);
         switch (ringtone){
             case 0:
                 mediaPlayer= MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
@@ -50,9 +52,15 @@ public class AlertReciever extends BroadcastReceiver {
         Log.i("currenttime",Long.toString(System.currentTimeMillis()));
 
         String label = intent.getStringExtra("label");
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotifiaction("Alarmer",label);
-        notificationHelper.getManager().notify(1,nb.build());
+        if(intentwhich==0) {
+            NotificationHelper notificationHelper = new NotificationHelper(context);
+            NotificationCompat.Builder nb = notificationHelper.getChannelNotifiaction("Alarmer", label);
+            notificationHelper.getManager().notify(1, nb.build());
+        }else{
+            Intent intent1 = new Intent(context,AlarmService.class);
+            intent1.putExtra("labelname",label);
+            ContextCompat.startForegroundService(context,intent1);
+        }
 
     }
 }
