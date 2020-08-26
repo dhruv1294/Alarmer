@@ -9,7 +9,9 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_alarm_black_24dp"
+       >
 
 
         <TextView
@@ -33,16 +35,26 @@
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="95dp"
+            android:layout_height="0dp"
+
             android:layout_marginEnd="50dp"
             android:background="@drawable/button_border"
             android:shadowColor="@color/colorPrimary"
-            android:visibility="invisible"
             android:text="cancel"
             android:textColor="@android:color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/alarmTime1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            app:layout_constraintTop_toTopOf="@id/alarmTime1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/alarmTime1"/>
+
 
         <TextView
             android:id="@+id/alarmTime2"
@@ -50,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
 
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
 
 
             android:text="Time"
@@ -63,16 +75,24 @@
         <Button
             android:id="@+id/cancelButton2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_height="0dp"
+
             android:layout_marginEnd="50dp"
             android:background="@drawable/button_border"
             android:shadowColor="@color/colorPrimary"
-            android:visibility="invisible"
             android:text="cancel"
             android:textColor="@android:color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/alarmTime2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cancelButton" />
+
+            app:layout_constraintTop_toTopOf="@id/alarmTime2" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/alarmTime2"/>
 
         <TextView
             android:id="@+id/alarmTime3"
@@ -81,7 +101,7 @@
             android:layout_marginStart="20dp"
 
 
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
 
 
 
@@ -95,36 +115,30 @@
         <Button
             android:id="@+id/cancelButton3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_height="0dp"
+
             android:layout_marginEnd="50dp"
             android:background="@drawable/button_border"
             android:shadowColor="@color/colorPrimary"
-            android:visibility="invisible"
             android:text="cancel"
             android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cancelButton2" />
-
-
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
             android:visibility="invisible"
-            android:focusable="true"
-            android:src="@drawable/ic_add_alarm_black_24dp"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/alarmTime3"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="@id/alarmTime3" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/alarmTime3"/>
+
+
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

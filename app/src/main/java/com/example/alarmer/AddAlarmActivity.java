@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.ContextMenu;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,15 +31,14 @@ import android.widget.Toast;
 import com.example.alarmer.Fragments.AlarmFragment;
 import com.example.alarmer.Fragments.TimePickerFragment;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Set;
+
 
 public class AddAlarmActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     String[] ringtones = {"Default Ringtone","Extreme Alarm","Let me love U","LoveStory","Moonlight Sonata","See You Again","Swing Jazz","Tomorrowland"};
     TextClock textClock;
     Button setAlarmButton,testRingtoneButton;
-    AlarmFragment alarmFragment = new AlarmFragment();
+
     EditText labelEditText;
     MediaPlayer mediaPlayer;
     int[] requestCodes;

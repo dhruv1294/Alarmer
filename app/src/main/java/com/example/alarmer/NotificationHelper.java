@@ -44,7 +44,7 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNotifiaction(String title,String message){
-        Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+
         Intent intent;
         PendingIntent pendingIntent;
 
@@ -53,7 +53,6 @@ public class NotificationHelper extends ContextWrapper {
 
         return new NotificationCompat.Builder(getApplicationContext(),channelId)
                 .setContentTitle(title)
-              //  .setSound(sound)
                 .setContentIntent(pendingIntent)
                 .setContentText(message)
                 .setAutoCancel(true)

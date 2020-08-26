@@ -53,7 +53,7 @@ public class StopwatchFragment extends Fragment {
                 if(!isResume){
                     tStart = SystemClock.uptimeMillis();
                     handler.postDelayed(runnable,0);
-                    //chronometer.start();
+
                     isResume=true;
                     resetButton.setVisibility(View.INVISIBLE);
                     playButton.setImageResource(R.drawable.ic_pause_black_24dp);
@@ -62,7 +62,7 @@ public class StopwatchFragment extends Fragment {
                 }else{
                     tBuff += tMilliSec;
                     handler.removeCallbacks(runnable);
-                  //  chronometer.stop();
+
                     isResume=false;
                     resetButton.setVisibility(View.VISIBLE);
                     playButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);

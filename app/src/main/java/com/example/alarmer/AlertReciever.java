@@ -50,7 +50,7 @@ public class AlertReciever extends BroadcastReceiver {
 
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
-        //Toast.makeText(context, "Recieved", Toast.LENGTH_SHORT).show();
+
         Log.i("currenttime",Long.toString(System.currentTimeMillis()));
 
 
